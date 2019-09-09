@@ -5,6 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
+/**
+ * CLI tool
+ * The unique characters used in the first argument file is output to the second argument file.
+ * Usage: uniqueCharacter input-file output-file
+ * 2019-9-10 Kenichi Masuta
+ */
 public class Main {
     public static void main(String[] args) {
         if (2 != args.length) {
