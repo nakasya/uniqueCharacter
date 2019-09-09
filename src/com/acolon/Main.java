@@ -10,6 +10,7 @@ import java.util.Arrays;
  * The unique characters used in the first argument file is output to the second argument file.
  * Usage: uniqueCharacter input-file output-file
  * 2019-9-10 Kenichi Masuta
+ * TODO:Unicode 0x100未満を含めなくする。
  */
 public class Main {
     public static void main(String[] args) {
@@ -54,8 +55,8 @@ public class Main {
         StringBuilder temp =  new StringBuilder(test.length());
         for(int i=0;i<test.length();i++){
             char c = test.charAt(i);
-            // Ignore control code.
-            if (Character.isISOControl(c))
+            // Ignore ASCII for default fonts.
+            if (c < 0x100)
                 continue;
             if(temp.indexOf(Character.toString(c))==-1) {
                 temp.append(c);
