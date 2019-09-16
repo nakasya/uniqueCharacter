@@ -11,11 +11,13 @@ import java.util.Arrays;
 /**
  * CLI tool
  * The unique characters used in the first argument file is output to the second argument file.
+ * Especially for languages that do not use the alphabet.
  * Usage: uniqueCharacter input-file output-file
- * 2019-9-10 Kenichi Masuta
- * TODO:Unicode 0x100未満を含めなくする。
+ * Note:It doesn't include under unicode IGNORED_ASCII_CODE. They must be included by the base-code.
+ * 2019-9-10 Ken'ichi Masuta
  */
 public class Main {
+    private static final char IGNORED_ASCII_CODE = 0x100;
     public static void main(String[] args) {
         if (2 != args.length) {
             System.err.println("Invalid arguments count:" + args.length);
@@ -34,6 +36,7 @@ public class Main {
             BufferedWriter buffer = null;
 
             outstream = new FileOutputStream(writePath);
+            // Insert UTF-8 BOM
             outstream.write(0xef);
             outstream.write(0xbb);
             outstream.write(0xbf);
@@ -74,7 +77,7 @@ public class Main {
         for(int i=0;i<test.length();i++){
             char c = test.charAt(i);
             // Ignore ASCII for default fonts.
-            if (c < 0x100)
+            if (c < IGNORED_ASCII_CODE)
                 continue;
             if(temp.indexOf(Character.toString(c))==-1) {
                 temp.append(c);
