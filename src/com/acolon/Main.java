@@ -1,6 +1,9 @@
 package com.acolon;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -26,7 +29,22 @@ public class Main {
         }
         String uniqueText = sort(uniqueCharacters(allText));
         try {
-            Files.write(Paths.get(writePath), uniqueText.getBytes());
+            FileOutputStream outstream;
+            OutputStreamWriter writer;
+            BufferedWriter buffer = null;
+
+            outstream = new FileOutputStream(writePath);
+            outstream.write(0xef);
+            outstream.write(0xbb);
+            outstream.write(0xbf);
+
+            writer = new OutputStreamWriter(outstream, "UTF-8");
+            buffer = new BufferedWriter(writer);
+            buffer.write(uniqueText);
+
+            buffer.close();
+            writer.close();
+            outstream.close();
         }catch (IOException e){
             e.printStackTrace();
             System.exit(3);
