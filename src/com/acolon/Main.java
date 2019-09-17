@@ -57,7 +57,7 @@ public class Main {
             ret = new String(Files.readAllBytes(Paths.get(inputPath)));
         }
         catch (IOException e) {
-            System.err.print("Can't read the input file:" + inputPath);
+            System.err.print("Can't open the input file:" + inputPath);
             ret = null;
         }
         return ret;
