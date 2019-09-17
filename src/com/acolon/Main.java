@@ -23,31 +23,27 @@ public class Main {
             System.err.println("Invalid arguments count:" + args.length);
             System.exit(1);
         }
-        String readPath = args[0];
-        String writePath = args[1];
+        String inputPath = args[0];
+        String outputPath = args[1];
         String allText;
-        if (null == (allText = readFile(readPath))) {
+        if (null == (allText = readFile(inputPath))) {
             System.exit(2);
         }
         String uniqueText = sort(uniqueCharacters(allText));
         try {
-            FileOutputStream outstream;
-            OutputStreamWriter writer;
-            BufferedWriter buffer = null;
-
-            outstream = new FileOutputStream(writePath);
+            FileOutputStream outStream = new FileOutputStream(outputPath);
             // Insert UTF-8 BOM
-            outstream.write(0xef);
-            outstream.write(0xbb);
-            outstream.write(0xbf);
+            outStream.write(0xef);
+            outStream.write(0xbb);
+            outStream.write(0xbf);
 
-            writer = new OutputStreamWriter(outstream, "UTF-8");
-            buffer = new BufferedWriter(writer);
+            OutputStreamWriter writer = new OutputStreamWriter(outStream, "UTF-8");
+            BufferedWriter buffer = new BufferedWriter(writer);
             buffer.write(uniqueText);
 
             buffer.close();
             writer.close();
-            outstream.close();
+            outStream.close();
         }catch (IOException e){
             e.printStackTrace();
             System.exit(3);
@@ -55,13 +51,13 @@ public class Main {
         System.err.print("Execution was successful.");
     }
 
-    private static String readFile(String readPath) {
+    private static String readFile(String inputPath) {
         String ret;
         try {
-            ret = new String(Files.readAllBytes(Paths.get(readPath)));
+            ret = new String(Files.readAllBytes(Paths.get(inputPath)));
         }
         catch (IOException e) {
-            e.printStackTrace();
+            System.err.print("Can't read the input file:" + inputPath);
             ret = null;
         }
         return ret;
